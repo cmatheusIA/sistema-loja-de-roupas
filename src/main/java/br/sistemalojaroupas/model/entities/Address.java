@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.sistemalojaroupas.model.entities;
 
-/**
- *
- * @author silas
- */
 public class Address {
-    
+
     private String cep;
     private String state;
     private String city;
@@ -18,15 +9,7 @@ public class Address {
     private String street;
     private String number;
 
-    public Address() {}
-    
-    public Address(String cep, String state, String city, String neighborhood, String street, String number) {
-        this.cep = cep;
-        this.state = state;
-        this.city = city;
-        this.neighborhood = neighborhood;
-        this.street = street;
-        this.number = number;
+    public Address() {
     }
 
     public String getCep() {
@@ -79,7 +62,8 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" + "cep=" + cep + ", state=" + state + ", city=" + city + ", neighborhood=" + neighborhood + ", street=" + street + ", number=" + number + '}';
+        return String.format("Address{cep= '%s', state= '%s', city= '%s', neighborhood= '%s', street= '%s', number= '%s'}",cep, state, city, neighborhood, street, number);
     }
-    
+
+
 }

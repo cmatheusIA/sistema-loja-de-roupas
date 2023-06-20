@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.sistemalojaroupas.model.entities;
 
 import java.io.Serializable;
@@ -13,12 +8,8 @@ import org.dizitart.no2.objects.Id;
 import org.dizitart.no2.objects.Index;
 import org.dizitart.no2.objects.Indices;
 
-/**
- *
- * @author vfdes
- */
 @Indices(
-    @Index(value = "cpf", type = IndexType.Unique)
+        @Index(value = "cpf", type = IndexType.Unique)
 )
 public class Customer implements Serializable, TableContract {
 
@@ -33,17 +24,17 @@ public class Customer implements Serializable, TableContract {
 
     }
 
-    public Customer(String cpf, String name, String email, String celular) {
+    public Customer(String cpf, String name, String email, String phone) {
         this.cpf = cpf;
         this.name = name;
         this.email = email;
-        this.phone = celular;
+        this.phone = phone;
     }
 
     public NitriteId getId() {
         return id;
     }
-    
+
     public String getCpf() {
         return cpf;
     }
@@ -78,9 +69,7 @@ public class Customer implements Serializable, TableContract {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        return hash;
+        return Objects.hash(id);
     }
 
     @Override
@@ -88,34 +77,31 @@ public class Customer implements Serializable, TableContract {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Customer other = (Customer) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        Customer other = (Customer) obj;
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public String toString() {
-        return "Client{" + "cpf=" + cpf + ", nome=" + name + ", email=" + email + ", celular=" + phone + '}';
+        return "Customer{" +
+                "cpf='" + cpf + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 
     @Override
     public Object[] tableRowModel() {
         return new Object[]{
-            getName(),
-            getCpf(),
-            getPhone(),
-            getEmail()
+                getName(),
+                getCpf(),
+                getPhone(),
+                getEmail()
         };
     }
 
 }
-
-
