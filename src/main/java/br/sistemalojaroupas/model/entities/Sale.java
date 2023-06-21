@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.sistemalojaroupas.model.entities;
 
 import java.io.Serializable;
@@ -13,34 +8,29 @@ import java.util.Objects;
 import java.util.Set;
 import org.dizitart.no2.objects.Id;
 
-/**
- *
- * @author silas
- */
 public class Sale implements Serializable, TableContract {
-    private final static long serialVersionUID = 1L;
-    
-    private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    
+    private static final long serialVersionUID = 1L;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
     @Id
     private Long id;
-    
+
     private Set<SaleItem> items = new HashSet<>();
-    
     private Employee employee;
     private Customer customer;
     private Integer payment;
     private Integer installments;
-    
-    public static final int MONEY = 1;
-    public static final int CREDIT = 2;
-    public static final int DEBIT = 3;
-    public static final int MONEY_CREDIT = 4;
-    
     private Date moment;
-    
+
+    public static class PaymentType {
+        public static final int MONEY = 1;
+        public static final int CREDIT = 2;
+        public static final int DEBIT = 3;
+        public static final int MONEY_CREDIT = 4;
+    }
+
     public Sale() {
-        
+
     }
 
     public Long getId() {
@@ -54,19 +44,19 @@ public class Sale implements Serializable, TableContract {
     public Set<SaleItem> getItems() {
         return items;
     }
-    
+
     public Date getMoment() {
         return moment;
     }
-    
+
     public void setMoment(Date moment) {
         this.moment = moment;
     }
-    
+
     public void addItem(SaleItem item) {
         items.add(item);
     }
-    
+
     public void removeItem(SaleItem item) {
         items.remove(item);
     }
@@ -74,14 +64,9 @@ public class Sale implements Serializable, TableContract {
     public Employee getEmployee() {
         return employee;
     }
-    
+
     public String getEmployeeName() {
-        if (employee == null) {
-            return "N/A";
-        }
-        else {
-            return employee.getName();
-        }
+        return (employee == null) ? "N/A" : employee.getName();
     }
 
     public void setEmployee(Employee employee) {
@@ -91,43 +76,33 @@ public class Sale implements Serializable, TableContract {
     public Customer getCustomer() {
         return customer;
     }
-    
+
     public String getCustomerName() {
-        if (customer == null) {
-            return "N/A";
-        }
-        else {
-            return customer.getName();
-        }
+        return (customer == null) ? "N/A" : customer.getName();
     }
-    
+
     public String getCustomerCpf() {
-        if (customer == null) {
-            return "N/A";
-        }
-        else {
-            return customer.getCpf();
-        }
+        return (customer == null) ? "N/A" : customer.getCpf();
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    
+
     public String getPaymentName() {
         if (payment == null) {
             throw new IllegalStateException("O método de pagamento não pode ser nulo.");
         }
-        if (payment == MONEY) {
+        if (payment == PaymentType.MONEY) {
             return "DINHEIRO";
         }
-        if (payment == CREDIT) {
+        if (payment == PaymentType.CREDIT) {
             return "CRÉDITO";
         }
-        if (payment == DEBIT) {
+        if (payment == PaymentType.DEBIT) {
             return "DÉBITO";
         }
-        if (payment == MONEY_CREDIT) {
+        if (payment == PaymentType.MONEY_CREDIT) {
             return "DINHEIRO + CRÉDITO";
         }
         return "N/A";
@@ -137,49 +112,33 @@ public class Sale implements Serializable, TableContract {
         return payment;
     }
 
-    /**
-     * Método de pagamento como um int.
-     * <p>É recomendado usar: 
-     * <p>Sale.MONEY
-     * <p>Sale.CREDIT
-     * <p>Sale.DEBIT
-     * <p>Sale.MONEY_CREDIT
-     * 
-     * @param payment não pode ser nulo
-     * @param installments pode ser nulo
-     */
     public void setPayment(int payment) {
         if (payment > 4 || payment < 1) {
             throw new IllegalArgumentException("Opção inválida");
         }
-        
         this.payment = payment;
-       
     }
 
-    public Object getInstallments() {
-        if (installments == null) {
-            return "N/A";
-        }
-        return installments;
+    public Object getFormattedInstallments() {
+        return (installments == null) ? "N/A" : installments;
     }
 
     public void setInstallments(Integer installments) {
         if (payment == null) {
             throw new IllegalStateException("O método de pagamento ainda não foi definido.");
         }
-        if (payment == Sale.CREDIT || payment == Sale.MONEY_CREDIT){
+        if (payment == PaymentType.CREDIT || payment == PaymentType.MONEY_CREDIT) {
             this.installments = installments;
         }
     }
-    
+
     public String getFormattedDate() {
         return sdf.format(moment);
     }
-    
+
     public Double getTotal() {
         double sum = 0.0;
-        
+
         for (SaleItem element : items) {
             sum += element.getSubTotal();
         }
@@ -188,9 +147,7 @@ public class Sale implements Serializable, TableContract {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        return hash;
+        return Objects.hash(id);
     }
 
     @Override
@@ -198,33 +155,26 @@ public class Sale implements Serializable, TableContract {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Sale other = (Sale) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        Sale other = (Sale) obj;
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public String toString() {
-        return "Sale{" + "id=" + id + ", items=" + items + ", moment=" + moment + "total=" + getTotal() +'}';
+        return "Sale{" + "id=" + id + ", items=" + items + ", moment=" + moment + ", total=" + getTotal() + '}';
     }
 
     @Override
     public Object[] tableRowModel() {
         return new Object[]{
-            getId(),
-            String.format("%.2f", getTotal()),
-            getFormattedDate(),
-            (customer == null) ? "N/A" : getCustomer().getName(),
-            (customer == null) ? "N/A" : getCustomer().getCpf()
+                getId(),
+                String.format("%.2f", getTotal()),
+                getFormattedDate(),
+                (customer == null) ? "N/A" : getCustomer().getName(),
+                (customer == null) ? "N/A" : getCustomer().getCpf()
         };
     }
-    
 }

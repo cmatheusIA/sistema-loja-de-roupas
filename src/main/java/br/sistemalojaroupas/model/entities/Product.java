@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.sistemalojaroupas.model.entities;
 
 import java.io.Serializable;
@@ -11,15 +6,11 @@ import java.util.Date;
 import java.util.Objects;
 import org.dizitart.no2.objects.Id;
 
-/**
- *
- * @author silas
- */
 public class Product implements Serializable, TableContract {
     private final static long serialVersionUID = 1L;
-    
+
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
+
     @Id
     private Long id;
     private String description;
@@ -28,11 +19,11 @@ public class Product implements Serializable, TableContract {
     private Double salePrice;
     private Date date = new Date();
     private int quantity;
-    
+
     private Color color;
     private Category category;
     private Brand brand;
-    
+
     public Product() {}
 
     public Product(String description, Category category, String size, Color color, Double costPrice, Double salePrice, int quantity) {
@@ -104,10 +95,9 @@ public class Product implements Serializable, TableContract {
     public Date getDate() {
         return date;
     }
-    
+
     public String getFormattedDate() {
-        String formattedDate = sdf.format(this.date);
-        return formattedDate;
+        return sdf.format(this.date);
     }
 
     public void setDate(Date date) {
@@ -129,12 +119,10 @@ public class Product implements Serializable, TableContract {
     public void setBrand(Brand brand) {
         this.brand = brand;
     }
-    
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        return hash;
+        return Objects.hash(id);
     }
 
     @Override
@@ -142,59 +130,52 @@ public class Product implements Serializable, TableContract {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Product other = (Product) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        Product other = (Product) obj;
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public String toString() {
-        return "Product{" 
-                + "id=" 
-                + id 
-                + ", description=" 
-                + description 
-                + ", category=" 
-                + category 
-                + ", size=" 
-                + size 
-                + ", brand=" 
+        return "Product{"
+                + "id="
+                + id
+                + ", description="
+                + description
+                + ", category="
+                + category
+                + ", size="
+                + size
+                + ", brand="
                 + brand
-                + ", color=" 
-                + color 
-                + ", costPrice=" 
-                + costPrice 
-                + ", salePrice=" 
-                + salePrice 
-                + ", date=" 
-                + date 
-                + ", quantity=" 
-                + quantity 
+                + ", color="
+                + color
+                + ", costPrice="
+                + costPrice
+                + ", salePrice="
+                + salePrice
+                + ", date="
+                + date
+                + ", quantity="
+                + quantity
                 + '}';
     }
 
     @Override
     public Object[] tableRowModel() {
         return new Object[] {
-            getId(),
-            getDescription(),
-            getColor(),
-            getSize(),
-            getCategory(),
-            getBrand(),
-            String.format("%.2f", getCostPrice()),
-            String.format("%.2f", getSalePrice()),
-            getQuantity(),
-            getFormattedDate()
+                id,
+                description,
+                color,
+                size,
+                category,
+                brand,
+                String.format("%.2f", costPrice),
+                String.format("%.2f", salePrice),
+                quantity,
+                getFormattedDate()
         };
     }
-    
 }

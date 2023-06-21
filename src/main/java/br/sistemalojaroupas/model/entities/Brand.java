@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.sistemalojaroupas.model.entities;
 
 import java.util.Objects;
@@ -12,23 +7,19 @@ import org.dizitart.no2.objects.Id;
 import org.dizitart.no2.objects.Index;
 import org.dizitart.no2.objects.Indices;
 
-/**
- *
- * @author silas
- */
 @Indices(
-    @Index(value = "name", type = IndexType.Unique)
+        @Index(value = "name", type = IndexType.Unique)
 )
 public class Brand {
-    
+
     @Id
     private NitriteId id;
     private String name;
-    
+
     public Brand() {
-        
+
     }
-    
+
     public Brand(String name) {
         this.name = name;
     }
@@ -47,9 +38,7 @@ public class Brand {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        return hash;
+        return Objects.hash(id);
     }
 
     @Override
@@ -57,24 +46,15 @@ public class Brand {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Brand other = (Brand) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        Brand other = (Brand) obj;
+        return Objects.equals(id, other.id);
     }
 
-    
-    
     @Override
     public String toString() {
         return name;
     }
-    
 }

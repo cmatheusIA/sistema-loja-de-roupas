@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.sistemalojaroupas.model.entities;
 
 import java.io.Serializable;
@@ -15,16 +10,12 @@ import org.dizitart.no2.objects.Id;
 import org.dizitart.no2.objects.Index;
 import org.dizitart.no2.objects.Indices;
 
-/**
- *
- * @author silas
- */
 @Indices(
-    @Index(value = "cpf", type = IndexType.Unique)
+        @Index(value = "cpf", type = IndexType.Unique)
 )
 public class Employee implements Serializable, TableContract {
-    
-    @Id 
+
+    @Id
     private NitriteId id;
     private String cpf;
     private String name;
@@ -33,12 +24,12 @@ public class Employee implements Serializable, TableContract {
     private Date birthDate;
     private Date admissionDate;
     private Double salary;
-    
+
     private Address address;
     private Office office;
-    
+
     private final static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
+
     public Employee() {
     }
 
@@ -56,7 +47,7 @@ public class Employee implements Serializable, TableContract {
     public NitriteId getId() {
         return id;
     }
-    
+
     public String getCpf() {
         return cpf;
     }
@@ -92,7 +83,7 @@ public class Employee implements Serializable, TableContract {
     public Date getBirthDate() {
         return birthDate;
     }
-    
+
     public String getFormattedBirthDate() {
         return sdf.format(birthDate);
     }
@@ -104,7 +95,7 @@ public class Employee implements Serializable, TableContract {
     public Date getAdmissionDate() {
         return admissionDate;
     }
-    
+
     public String getFormattedAdmissionDate() {
         return sdf.format(admissionDate);
     }
@@ -139,9 +130,7 @@ public class Employee implements Serializable, TableContract {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        return hash;
+        return Objects.hash(id);
     }
 
     @Override
@@ -149,30 +138,33 @@ public class Employee implements Serializable, TableContract {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Employee other = (Employee) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        Employee other = (Employee) obj;
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public String toString() {
-        return "Employee{" + "cpf=" + cpf + ", name=" + name + ", email=" + email + ", phone=" + phone + ", birthDate=" + birthDate + ", admissionDate=" + admissionDate + ", salary=" + salary + ", address=" + address + '}';
+        return "Employee{" +
+                "cpf='" + cpf + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", birthDate=" + birthDate +
+                ", admissionDate=" + admissionDate +
+                ", salary=" + salary +
+                ", address=" + address +
+                '}';
     }
 
     @Override
     public Object[] tableRowModel() {
         return new Object[] {
-            getCpf(),
-            getName()
+                cpf,
+                name
         };
     }
-    
+
 }
