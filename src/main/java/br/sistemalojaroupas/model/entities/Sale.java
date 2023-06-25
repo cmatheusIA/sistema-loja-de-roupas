@@ -12,6 +12,9 @@ public class Sale implements Serializable, TableContract {
     private static final long serialVersionUID = 1L;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
+    private static int MIN = 1;
+    private static  int MAX = 4;
+
     @Id
     private Long id;
 
@@ -113,7 +116,7 @@ public class Sale implements Serializable, TableContract {
     }
 
     public void setPayment(int payment) {
-        if (payment > 4 || payment < 1) {
+        if (payment > MAX|| payment < MIN) {
             throw new IllegalArgumentException("Opção inválida");
         }
         this.payment = payment;

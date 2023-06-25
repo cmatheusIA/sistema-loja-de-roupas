@@ -56,8 +56,9 @@ public class Office {
 
     @Override
     public int hashCode() {
+        final int prime = 79;
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = prime * hash + Objects.hashCode(this.id);
         return hash;
     }
 

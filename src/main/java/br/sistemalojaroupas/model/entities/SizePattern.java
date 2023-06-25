@@ -66,8 +66,9 @@ public class SizePattern implements Serializable {
 
     @Override
     public int hashCode() {
+        final int prime = 53;
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = prime * hash + Objects.hashCode(this.id);
         return hash;
     }
 

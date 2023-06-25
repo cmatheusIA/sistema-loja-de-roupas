@@ -28,8 +28,9 @@ public class SaleItem implements Serializable, TableContract {
     }
 
     public SaleItem(Product product, int quantity) {
-        if (quantity > product.getQuantity()) throw new IllegalArgumentException("A quantidade excede a do produto em estoque.");
-            
+        if (quantity > product.getQuantity()) {
+            throw new IllegalArgumentException("A quantidade excede a do produto em estoque.");
+        }
         this.product = product;
         this.quantity = quantity;
         
@@ -53,8 +54,9 @@ public class SaleItem implements Serializable, TableContract {
 
     @Override
     public int hashCode() {
+        final int prime = 37;
         int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.product);
+        hash = prime* hash + Objects.hashCode(this.product);
         return hash;
     }
 

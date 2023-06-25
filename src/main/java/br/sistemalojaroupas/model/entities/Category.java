@@ -22,11 +22,11 @@ import org.dizitart.no2.objects.Indices;
 )
 public class Category implements Serializable{
     private static long serialVersionUID = 1L;
-    
+
     @Id
     private NitriteId id;
     private String category;
-    
+
     private SizePattern sizePattern;
 
     public Category() {
@@ -35,7 +35,7 @@ public class Category implements Serializable{
     public Category(String category) {
         this.category = category;
     }
-    
+
     public Category(String category, SizePattern sizePattern) {
         this(category);
         this.sizePattern = sizePattern;
@@ -64,13 +64,15 @@ public class Category implements Serializable{
     public void setSizePattern(SizePattern sizePattern) {
         this.sizePattern = sizePattern;
     }
-    
+
     @Override
     public int hashCode() {
+        final int prime = 47;
         int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = prime * hash + Objects.hashCode(this.id);
         return hash;
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -89,7 +91,7 @@ public class Category implements Serializable{
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
         return category;
